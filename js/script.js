@@ -1,47 +1,44 @@
-// ===== Papier-kamień-nożyce – wersja z funkcjami =====
-clearMessages();                         // czyścimy pole komunikatów
+// === Rock-Paper-Scissors — wersja z GUI ===
+// (printMessage & clearMessages są w js/functions.js)
 
-/* ---------- FUNKCJE ---------- */
-// zwraca nazwę ruchu na podstawie liczby 1-3
 function getMoveName(argMoveId){
-  if(argMoveId == 1){
-    return 'kamień';
-  } else if(argMoveId == 2){
-    return 'papier';
-  } else if(argMoveId == 3){
-    return 'nożyce';
-  }  
+  if(argMoveId == 1){ return 'kamień';  }
+  else if(argMoveId == 2){ return 'papier'; }
+  else if(argMoveId == 3){ return 'nożyce'; }
   printMessage('Nie znam ruchu o id ' + argMoveId + '.');
   return 'nieznany ruch';
 }
 
-// wyświetla przebieg i wynik rundy
 function displayResult(argComputerMove, argPlayerMove){
   printMessage('Zagrałem ' + argComputerMove + ', a Ty ' + argPlayerMove + '.');
 
-  if(argPlayerMove == 'nieznany ruch'){
-    printMessage('Wpisz 1 (kamień), 2 (papier) lub 3 (nożyce).');
-  } else if(argComputerMove == argPlayerMove){
-    printMessage('Remis!');
-  } else if(
+  if(argComputerMove == argPlayerMove){
+    printMessage('Remis!');                     return;
+  }
+  if(
     (argComputerMove == 'kamień'  && argPlayerMove == 'papier') ||
     (argComputerMove == 'papier'  && argPlayerMove == 'nożyce') ||
-    (argComputerMove == 'nożyce'  && argPlayerMove == 'kamień')
+    (argComputerMove == 'nożyce' && argPlayerMove == 'kamień')
   ){
-    printMessage('Ty wygrywasz!');
-  } else {
-    printMessage('Tym razem przegrywasz :(');
+    printMessage('Ty wygrywasz!');              return;
   }
+  if(argComputerMove == 'nieznany ruch' || argPlayerMove == 'nieznany ruch'){
+    printMessage('Zły ruch – spróbuj ponownie');return;
+  }
+  printMessage('Tym razem przegrywasz :(');
 }
 
-/* ---------- GŁÓWNY PRZEBIEG GRY ---------- */
-// losowanie ruchu komputera
-const randomNumber  = Math.floor(Math.random() * 3 + 1);
-const computerMove  = getMoveName(randomNumber);
+function playGame(playerInput){                // 1-argumentowa „maszyna” gry
+  clearMessages();                             // wyczyść wcześniejsze komunikaty
 
-// wybór gracza (prompt)
-const playerInput   = prompt('Wybierz ruch: 1-kamień, 2-papier, 3-nożyce');
-const playerMove    = getMoveName(playerInput);
+  const randomNumber = Math.floor(Math.random()*3+1);
+  const computerMove = getMoveName(randomNumber);   // ruch komputera
+  const playerMove   = getMoveName(playerInput);    // ruch gracza
 
-// prezentacja wyniku
-displayResult(computerMove, playerMove);
+  displayResult(computerMove, playerMove);          // wynik rundy
+}
+
+/* ===== listenery 3 przycisków ===== */
+document.getElementById('play-rock')    .addEventListener('click', () => playGame(1));
+document.getElementById('play-paper')   .addEventListener('click', () => playGame(2));
+document.getElementById('play-scissors').addEventListener('click', () => playGame(3));
