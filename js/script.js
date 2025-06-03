@@ -31,3 +31,18 @@ if (playerInput == '1') {
 }
 
 printMessage('Twój ruch: ' + playerMove);
+
+/* ======= ETAP 3: kto wygrał? ======= */
+if (playerMove == 'nieznany ruch') {
+  printMessage('Nieznany ruch – odśwież stronę i spróbuj ponownie.');
+} else if (playerMove == computerMove) {
+  printMessage('Remis!');
+} else if (
+  (computerMove == 'kamień'  && playerMove == 'papier')  ||
+  (computerMove == 'papier'  && playerMove == 'nożyce') ||
+  (computerMove == 'nożyce' && playerMove == 'kamień')
+) {
+  printMessage('Ty wygrywasz!');
+} else {
+  printMessage('Komputer wygrywa :(');
+}
