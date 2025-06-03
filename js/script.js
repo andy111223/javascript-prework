@@ -1,11 +1,17 @@
-// --- R-P-S  • etap 1 — zmienne ---
-clearMessages();               // wyczyść pole komunikatów
+/* ======= ETAP 1: ruch komputera ======= */
+clearMessages();
 
-let computerMove = 'kamień';   // zagranie komputera
-let playerMove   = 'papier';   // zagranie gracza
+/* losuj liczbę 1-3 */
+let randomNumber = Math.floor(Math.random() * 3 + 1);
 
-printMessage(
-  'Zagrałem ' + computerMove +
-  '! Jeśli Twój ruch to ' + playerMove +
-  ', to wygrywasz!'
-);
+/* zamień liczbę na tekst ruchu */
+let computerMove = 'nieznany ruch';
+if (randomNumber == 1) {
+  computerMove = 'kamień';
+} else if (randomNumber == 2) {
+  computerMove = 'papier';
+} else if (randomNumber == 3) {
+  computerMove = 'nożyce';
+}
+
+printMessage('Komputer wylosował: ' + computerMove);
