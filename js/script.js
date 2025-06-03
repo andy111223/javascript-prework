@@ -15,3 +15,19 @@ if (randomNumber == 1) {
 }
 
 printMessage('Komputer wylosował: ' + computerMove);
+
+/* ======= ETAP 2: ruch gracza ======= */
+let playerInput = prompt(
+  'Wybierz ruch:\n1 – kamień\n2 – papier\n3 – nożyce'
+);
+
+let playerMove = 'nieznany ruch';
+if (playerInput == '1') {
+  playerMove = 'kamień';
+} else if (playerInput == '2') {
+  playerMove = 'papier';
+} else if (playerInput == '3') {
+  playerMove = 'nożyce';
+}
+
+printMessage('Twój ruch: ' + playerMove);
