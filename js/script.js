@@ -1,48 +1,47 @@
-/* ======= ETAP 1: ruch komputera ======= */
-clearMessages();
+// ===== Papier-kamień-nożyce – wersja z funkcjami =====
+clearMessages();                         // czyścimy pole komunikatów
 
-/* losuj liczbę 1-3 */
-let randomNumber = Math.floor(Math.random() * 3 + 1);
-
-/* zamień liczbę na tekst ruchu */
-let computerMove = 'nieznany ruch';
-if (randomNumber == 1) {
-  computerMove = 'kamień';
-} else if (randomNumber == 2) {
-  computerMove = 'papier';
-} else if (randomNumber == 3) {
-  computerMove = 'nożyce';
+/* ---------- FUNKCJE ---------- */
+// zwraca nazwę ruchu na podstawie liczby 1-3
+function getMoveName(argMoveId){
+  if(argMoveId == 1){
+    return 'kamień';
+  } else if(argMoveId == 2){
+    return 'papier';
+  } else if(argMoveId == 3){
+    return 'nożyce';
+  }  
+  printMessage('Nie znam ruchu o id ' + argMoveId + '.');
+  return 'nieznany ruch';
 }
 
-printMessage('Komputer wylosował: ' + computerMove);
+// wyświetla przebieg i wynik rundy
+function displayResult(argComputerMove, argPlayerMove){
+  printMessage('Zagrałem ' + argComputerMove + ', a Ty ' + argPlayerMove + '.');
 
-/* ======= ETAP 2: ruch gracza ======= */
-let playerInput = prompt(
-  'Wybierz ruch:\n1 – kamień\n2 – papier\n3 – nożyce'
-);
-
-let playerMove = 'nieznany ruch';
-if (playerInput == '1') {
-  playerMove = 'kamień';
-} else if (playerInput == '2') {
-  playerMove = 'papier';
-} else if (playerInput == '3') {
-  playerMove = 'nożyce';
+  if(argPlayerMove == 'nieznany ruch'){
+    printMessage('Wpisz 1 (kamień), 2 (papier) lub 3 (nożyce).');
+  } else if(argComputerMove == argPlayerMove){
+    printMessage('Remis!');
+  } else if(
+    (argComputerMove == 'kamień'  && argPlayerMove == 'papier') ||
+    (argComputerMove == 'papier'  && argPlayerMove == 'nożyce') ||
+    (argComputerMove == 'nożyce'  && argPlayerMove == 'kamień')
+  ){
+    printMessage('Ty wygrywasz!');
+  } else {
+    printMessage('Tym razem przegrywasz :(');
+  }
 }
 
-printMessage('Twój ruch: ' + playerMove);
+/* ---------- GŁÓWNY PRZEBIEG GRY ---------- */
+// losowanie ruchu komputera
+const randomNumber  = Math.floor(Math.random() * 3 + 1);
+const computerMove  = getMoveName(randomNumber);
 
-/* ======= ETAP 3: kto wygrał? ======= */
-if (playerMove == 'nieznany ruch') {
-  printMessage('Nieznany ruch – odśwież stronę i spróbuj ponownie.');
-} else if (playerMove == computerMove) {
-  printMessage('Remis!');
-} else if (
-  (computerMove == 'kamień'  && playerMove == 'papier')  ||
-  (computerMove == 'papier'  && playerMove == 'nożyce') ||
-  (computerMove == 'nożyce' && playerMove == 'kamień')
-) {
-  printMessage('Ty wygrywasz!');
-} else {
-  printMessage('Komputer wygrywa :(');
-}
+// wybór gracza (prompt)
+const playerInput   = prompt('Wybierz ruch: 1-kamień, 2-papier, 3-nożyce');
+const playerMove    = getMoveName(playerInput);
+
+// prezentacja wyniku
+displayResult(computerMove, playerMove);
