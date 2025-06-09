@@ -1,44 +1,52 @@
 // === Rock-Paper-Scissors — wersja z GUI ===
 // (printMessage & clearMessages są w js/functions.js)
 
-function getMoveName(argMoveId){
-  if(argMoveId == 1){ return 'kamień';  }
-  else if(argMoveId == 2){ return 'papier'; }
-  else if(argMoveId == 3){ return 'nożyce'; }
-  printMessage('Nie znam ruchu o id ' + argMoveId + '.');
+const getMoveName = function (moveId){
+  if (moveId == 1) return 'kamień';  
+  if (moveId == 2) return 'papier'; 
+  if (moveId == 3) return 'nożyce'; 
+
+  printMessage('Nie znam ruchu o id ' + moveId + '.');
   return 'nieznany ruch';
 }
 
-function displayResult(argComputerMove, argPlayerMove){
-  printMessage('Zagrałem ' + argComputerMove + ', a Ty ' + argPlayerMove + '.');
+const displayResult = function (compMove, playerMove){
+  printMessage('Zagrałem ' + compMove + ', a Ty ' + playerMove + '.');
 
-  if(argComputerMove == argPlayerMove){
-    printMessage('Remis!');                     return;
+  if(compMove == playerMove){
+    printMessage('Remis!');                     
+    return;
   }
   if(
-    (argComputerMove == 'kamień'  && argPlayerMove == 'papier') ||
-    (argComputerMove == 'papier'  && argPlayerMove == 'nożyce') ||
-    (argComputerMove == 'nożyce' && argPlayerMove == 'kamień')
+    (compMove == 'kamień'  && playerMove == 'papier') ||
+    (compMove == 'papier'  && playerMove == 'nożyce') ||
+    (compMove == 'nożyce' && playerMove == 'kamień')
   ){
-    printMessage('Ty wygrywasz!');              return;
+    printMessage('Wygrywasz!');              return;
   }
-  if(argComputerMove == 'nieznany ruch' || argPlayerMove == 'nieznany ruch'){
-    printMessage('Zły ruch – spróbuj ponownie');return;
+  if(compMove === 'nieznany ruch' || playerMove === 'nieznany ruch'){
+    printMessage('Zły ruch – spróbuj ponownie');
+    return;
   }
   printMessage('Tym razem przegrywasz :(');
-}
+};
 
-function playGame(playerInput){                // 1-argumentowa „maszyna” gry
-  clearMessages();                             // wyczyść wcześniejsze komunikaty
+/* ---------- main engine ---------- */
+const playGame = function (playerInput){                
+  clearMessages();                             
 
   const randomNumber = Math.floor(Math.random()*3+1);
-  const computerMove = getMoveName(randomNumber);   // ruch komputera
-  const playerMove   = getMoveName(playerInput);    // ruch gracza
+  const computerMove = getMoveName(randomNumber);   
+  const playerMove   = getMoveName(playerInput);    
 
-  displayResult(computerMove, playerMove);          // wynik rundy
+  displayResult(computerMove, playerMove);          
 }
 
-/* ===== listenery 3 przycisków ===== */
-document.getElementById('play-rock')    .addEventListener('click', () => playGame(1));
-document.getElementById('play-paper')   .addEventListener('click', () => playGame(2));
-document.getElementById('play-scissors').addEventListener('click', () => playGame(3));
+/* ---------- button listeners ---------- */
+const rockBtn = document.getElementById('play-rock');  
+const paperBtn = document.getElementById('play-paper');   
+const scissorsBtn = document.getElementById('play-scissors');
+
+  rockBtn.addEventListener('click', () => playGame(1));
+  paperBtn.addEventListener('click', () => playGame(2));
+  scissorsBtn.addEventListener('click', () => playGame(3));
