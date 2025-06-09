@@ -1,3 +1,4 @@
+{
 // === Rock-Paper-Scissors — wersja z GUI ===
 // (printMessage & clearMessages są w js/functions.js)
 
@@ -50,3 +51,4 @@ const scissorsBtn = document.getElementById('play-scissors');
   rockBtn.addEventListener('click', () => playGame(1));
   paperBtn.addEventListener('click', () => playGame(2));
   scissorsBtn.addEventListener('click', () => playGame(3));
+}
